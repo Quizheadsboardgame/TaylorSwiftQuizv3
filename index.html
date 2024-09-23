@@ -3,157 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Quiz</title>
+    <title>Background Image with Random Image Generator</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
-            background-color: #0CC0DF; /* Background color */
-        }
-        .container {
+            height: 100vh;
+            background-image: url('https://i.imgur.com/Zyx6JfJ.jpeg'); /* Updated background image */
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent image repetition */
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            width: 40%;
-            max-width: 800px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow */
-            padding: 20px;
+            align-items: center;
         }
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
+        #image-container {
+            width: 800px;
+            height: 800px;
+            background-size: cover;
+            background-position: center;
             cursor: pointer;
-            border: 5px solid #0CC0DF; /* Outer blue border color */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            transform: scale(0.8) translateY(10%);
         }
-        .qa-box {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .question {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        .answer {
-            font-size: 1.2em;
-            color: #555;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Text shadow */
+        #image-container.pulse {
+            transform: scale(0.8) translateY(10%) scale(1.1);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img id="quizImage" src="https://i.imgur.com/ioPzU6j.png" alt="Quiz Image">
-        <div class="qa-box">
-            <div id="question" class="question">Click the image to get a question!</div>
-            <div id="answer" class="answer"></div>
-        </div>
-    </div>
-    
-    <script>
-        const questionsAndAnswers = [
-            { question: "What is Taylor Swift's middle name?", answer: "Alison" },
-            { question: "In which year did Taylor Swift release her debut album?", answer: "2006" },
-            { question: "Which Taylor Swift album features the hit single 'Love Story'?", answer: "Fearless" },
-            { question: "What was the title of Taylor Swift's first single?", answer: "Tim McGraw" },
-            { question: "Which song did Taylor Swift write about her relationship with Joe Jonas?", answer: "Forever & Always" },
-            { question: "In which city was Taylor Swift born?", answer: "Reading, Pennsylvania" },
-            { question: "What was the name of Taylor Swift's 2014 album?", answer: "1989" },
-            { question: "Which Taylor Swift album includes the song 'Blank Space'?", answer: "1989" },
-            { question: "What genre of music did Taylor Swift originally start with?", answer: "Country" },
-            { question: "Taylor Swift made a cameo in which 2010 film?", answer: "Valentine's Day" },
-            { question: "What is the name of Taylor Swift's first self-titled album?", answer: "Taylor Swift" },
-            { question: "Which song did Taylor Swift perform at the 2014 Grammy Awards that won her Album of the Year?", answer: "The 1989 Album" },
-            { question: "Taylor Swift won the Best Female Video award at the 2009 MTV Video Music Awards for which song?", answer: "You Belong with Me" },
-            { question: "What is the name of Taylor Swift's 2017 album?", answer: "Reputation" },
-            { question: "Which song by Taylor Swift features the lyrics 'We never go out of style'?", answer: "Style" },
-            { question: "Taylor Swift's song 'All Too Well' is known for being about her relationship with which ex-boyfriend?", answer: "Jake Gyllenhaal" },
-            { question: "Which Taylor Swift album was re-released as 'Taylor's Version' in 2021?", answer: "Fearless" },
-            { question: "What is the name of Taylor Swift's 2019 album?", answer: "Lover" },
-            { question: "Which Taylor Swift song features the line 'I'm a crumpled up piece of paper lying here'?", answer: "All Too Well" },
-            { question: "Which song did Taylor Swift write about her high school experiences?", answer: "The Best Day" },
-            { question: "What is Taylor Swift's favorite number?", answer: "13" },
-            { question: "In which year did Taylor Swift release her album 'Red'?", answer: "2012" },
-            { question: "Which song by Taylor Swift is about her feud with Kanye West?", answer: "The Story of Us" },
-            { question: "Taylor Swift's song 'You Need to Calm Down' addresses issues related to which social topic?", answer: "LGBTQ+ Rights" },
-            { question: "Which album features the song 'Shake It Off'?", answer: "1989" },
-            { question: "What is the name of Taylor Swift's cat that has an Instagram account?", answer: "Olivia Benson" },
-            { question: "Which Taylor Swift song features the lyrics 'Cause baby, now we got bad blood'?", answer: "Bad Blood" },
-            { question: "Which album was Taylor Swift's first to feature a pop sound?", answer: "1989" },
-            { question: "Taylor Swift's song 'Look What You Made Me Do' is known for its association with which music genre?", answer: "Pop" },
-            { question: "Which Taylor Swift album includes the track 'Wildest Dreams'?", answer: "1989" },
-            { question: "In which Taylor Swift song will you find the lyrics 'We were built to fall apart'?", answer: "Out of the Woods" },
-            { question: "What is the title of Taylor Swift's 2020 surprise album?", answer: "Folklore" },
-            { question: "Which Taylor Swift song features the lyrics 'I had the time of my life fighting dragons with you'?", answer: "Long Live" },
-            { question: "Taylor Swift's 'The Man' video features her portraying various male stereotypes. True or false?", answer: "True" },
-            { question: "What was Taylor Swift's first Grammy Award-winning album?", answer: "Fearless" },
-            { question: "Which Taylor Swift album is known for its collaborations with other artists, including Ed Sheeran?", answer: "Red" },
-            { question: "Which song by Taylor Swift contains the line 'I knew you were trouble when you walked in'?", answer: "I Knew You Were Trouble" },
-            { question: "What is the name of Taylor Swift's 2022 album?", answer: "Midnights" },
-            { question: "Taylor Swift's song 'Cardigan' is from which album?", answer: "Folklore" },
-            { question: "Which Taylor Swift album includes the track 'The Last Time' featuring Gary Lightbody?", answer: "Red" },
-            { question: "Which Taylor Swift song talks about 'a love that was so true'?", answer: "Enchanted" },
-            { question: "What was the theme of Taylor Swift's 'Reputation' album?", answer: "Media scrutiny and personal reputation" },
-            { question: "Taylor Swift's 'You Belong with Me' was nominated for which major award at the 2010 MTV Video Music Awards?", answer: "Best Female Video" },
-            { question: "Which song did Taylor Swift release in 2021 that was a re-recording of her earlier hit?", answer: "Love Story (Taylor's Version)" },
-            { question: "Taylor Swift's song 'Ready for It?' is part of which album?", answer: "Reputation" },
-            { question: "Which Taylor Swift song features the lyrics 'I remember how we felt sitting by the water'?", answer: "Red" },
-            { question: "Taylor Swift's 'Death By A Thousand Cuts' is from which album?", answer: "Lover" },
-            { question: "What is the name of Taylor Swift's 2010 album?", answer: "Speak Now" },
-            { question: "Which Taylor Swift album features the song 'Cornelia Street'?", answer: "Lover" },
-            { question: "What is the title of the Taylor Swift album that features a 'folkloric' sound?", answer: "Folklore" },
-            { question: "Which song by Taylor Swift includes the lyrics 'The old Taylor can’t come to the phone right now'?", answer: "Look What You Made Me Do" },
-            { question: "Taylor Swift's 'All Too Well' was re-recorded in which version in 2021?", answer: "All Too Well (10 Minute Version)" },
-            { question: "What is the theme of Taylor Swift's 'Lover' album?", answer: "Romantic love and personal relationships" },
-            { question: "Which Taylor Swift song was featured in the film 'The Giver'?", answer: "Sweeter Than Fiction" },
-            { question: "Which Taylor Swift album includes the hit song '22'?", answer: "Red" },
-            { question: "What was the title of Taylor Swift's 2021 re-release of her 2008 album?", answer: "Fearless (Taylor’s Version)" },
-            { question: "Which Taylor Swift song features the line 'You’re the king, baby, I’m your queen'?", answer: "Lover" },
-            { question: "Taylor Swift's song 'Exile' features which artist?", answer: "Bon Iver" },
-            { question: "What is the title of Taylor Swift's debut single?", answer: "Tim McGraw" },
-            { question: "Which Taylor Swift song is about her friendship with Selena Gomez?", answer: "Breathe" },
-            { question: "Which Taylor Swift album includes the song 'Delicate'?", answer: "Reputation" },
-            { question: "Taylor Swift's song 'The Archer' is part of which album?", answer: "Lover" },
-            { question: "What is the name of Taylor Swift's 2018 album?", answer: "Lover" },
-            { question: "Which song did Taylor Swift write about her 2016 feud with Kanye West?", answer: "This Is Why We Can't Have Nice Things" },
-            { question: "Which Taylor Swift album includes the song 'Cardigan'?", answer: "Folklore" },
-            { question: "What is the name of Taylor Swift's 2019 album that features the song 'Me!'?", answer: "Lover" },
-            { question: "Which Taylor Swift song is known for its line 'I knew you were trouble when you walked in'?", answer: "I Knew You Were Trouble" },
-            { question: "What is the title of Taylor Swift's song featuring the lyrics 'I’m standing in front of you'?", answer: "State of Grace" },
-            { question: "Which Taylor Swift album includes the song 'All Too Well'?", answer: "Red" },
-            { question: "What is the name of Taylor Swift's song that features the line 'I’m shining like fireworks over your sad, empty town'?", answer: "Dear John" },
-            { question: "Taylor Swift's song 'Wildest Dreams' is part of which album?", answer: "1989" },
-            { question: "Which song did Taylor Swift release as a single in 2015 from the album '1989'?", answer: "Blank Space" },
-            { question: "What is the title of Taylor Swift's 2012 album?", answer: "Red" },
-            { question: "Which song did Taylor Swift perform with Shawn Mendes at the 2019 American Music Awards?", answer: "Lover" },
-            { question: "Taylor Swift's 'Holy Ground' is from which album?", answer: "Red" },
-            { question: "What is the name of Taylor Swift's 2020 album that was released on December 11?", answer: "Evermore" },
-            { question: "Which Taylor Swift song features the lyrics 'And I’ll never be the same'?", answer: "Red" },
-            { question: "Taylor Swift's 'Ivy' is a track on which album?", answer: "Evermore" },
-            { question: "Which Taylor Swift album was released in 2014 and marks her transition to pop music?", answer: "1989" },
-            { question: "Which Taylor Swift song contains the lyrics 'I’ll be cleaning up bottles with you on New Year’s Day'?", answer: "New Year's Day" },
-            { question: "Which song by Taylor Swift features the line 'I never think of him'?", answer: "Begin Again" },
-            { question: "What is the title of the Taylor Swift album that was released in 2023?", answer: "Midnights" }
-        ];
-        
-        let currentQuestionIndex = -1;
+    <div id="image-container"></div>
 
-        document.getElementById('quizImage').addEventListener('click', function() {
-            currentQuestionIndex = (currentQuestionIndex + 1) % questionsAndAnswers.length;
-            const qa = questionsAndAnswers[currentQuestionIndex];
-            document.getElementById('question').innerText = qa.question;
-            document.getElementById('answer').innerText = qa.answer;
+    <script>
+        const images = [
+            'https://i.postimg.cc/kGYzxJST/10.png',
+            'https://i.postimg.cc/J4gS0hMn/11.png',
+            'https://i.postimg.cc/wBYP5btY/12.png',
+            'https://i.postimg.cc/DwXHXKwc/13.png',
+            'https://i.postimg.cc/nz0PJF3n/14.png',
+            'https://i.postimg.cc/QCCnN2z1/15.png',
+            'https://i.postimg.cc/PJ7VC6Gc/16.png',
+            'https://i.postimg.cc/442S23K5/17.png',
+            'https://i.postimg.cc/KvdsFsD3/18.png',
+            'https://i.postimg.cc/1t5vJxs2/19.png',
+            'https://i.postimg.cc/JzF718dc/2.png',
+            'https://i.postimg.cc/XqrQ6wZg/20.png',
+            'https://i.postimg.cc/wxrwcbP4/21.png',
+            'https://i.postimg.cc/PJ0KXPYn/22.png',
+            'https://i.postimg.cc/Mp2tgfzy/23.png',
+            'https://i.postimg.cc/g2V4pc01/24.png',
+            'https://i.postimg.cc/7LXVCB0V/25.png',
+            'https://i.postimg.cc/0QQC7pCq/26.png',
+            'https://i.postimg.cc/rz6C6728/27.png',
+            'https://i.postimg.cc/gcxCWRb5/28.png',
+            'https://i.postimg.cc/NfTZycMk/29.png',
+            'https://i.postimg.cc/Fssh3zMV/3.png',
+            'https://i.postimg.cc/KcCdvzZY/30.png',
+            'https://i.postimg.cc/Jz5gq5jy/31.png',
+            'https://i.postimg.cc/13Q2wjVh/32.png',
+            'https://i.postimg.cc/kMRpZmxP/33.png',
+            'https://i.postimg.cc/GtDgsFcm/34.png',
+            'https://i.postimg.cc/ZKkMzMcB/35.png',
+            'https://i.postimg.cc/g00MKFY5/36.png',
+            'https://i.postimg.cc/zvTpfqjL/37.png',
+            'https://i.postimg.cc/kgJwn3t4/38.png',
+            'https://i.postimg.cc/Dwx60jqc/39.png',
+            'https://i.postimg.cc/d1YY1VRd/4.png',
+            'https://i.postimg.cc/RVQX5Vhy/40.png',
+            'https://i.postimg.cc/QtTJ6jv6/41.png',
+            'https://i.postimg.cc/Vv9B8Dfn/42.png',
+            'https://i.postimg.cc/5N1S3dg3/43.png',
+            'https://i.postimg.cc/c1fcw4RC/44.png',
+            'https://i.postimg.cc/xCMLvtbh/45.png',
+            'https://i.postimg.cc/kGy8ZGsy/46.png',
+            'https://i.postimg.cc/Fzv3D3yR/47.png',
+            'https://i.postimg.cc/Kc7n4pbg/48.png',
+            'https://i.postimg.cc/52yv7xCw/49.png',
+            'https://i.postimg.cc/fRVZqFT3/5.png',
+            'https://i.postimg.cc/K8WTCdPC/50.png',
+            'https://i.postimg.cc/zG4NsjVx/6.png',
+            'https://i.postimg.cc/3wMMSxc6/7.png',
+            'https://i.postimg.cc/NMY3tPYk/8.png',
+            'https://i.postimg.cc/85HqzBzQ/9.png'
+        ];
+
+        const imageContainer = document.getElementById('image-container');
+
+        function getRandomImage() {
+            const randomIndex = Math.floor(Math.random() * images.length);
+            return images[randomIndex];
+        }
+
+        function changeImage() {
+            const imageUrl = getRandomImage();
+            imageContainer.style.backgroundImage = `url('${imageUrl}')`;
+        }
+
+        function pulseEffect() {
+            imageContainer.classList.add('pulse');
+            setTimeout(() => {
+                imageContainer.classList.remove('pulse');
+            }, 300);
+        }
+
+        imageContainer.addEventListener('click', () => {
+            pulseEffect();
+            changeImage();
         });
+
+        // Initialize the image container with a random image when the page loads
+        window.onload = changeImage;
     </script>
 </body>
 </html>
