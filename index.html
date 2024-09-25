@@ -3,115 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Image with Random Image Generator</title>
+    <title>TAYLOR SWIFT</title>
     <style>
-        body {
+        * {
             margin: 0;
-            height: 100vh;
-            background-image: url('https://i.imgur.com/Zyx6JfJ.jpeg'); /* Updated background image */
-            background-size: cover; /* Ensure the image covers the entire background */
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat; /* Prevent image repetition */
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif; /* Standard font */
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
+            background-color: transparent; /* Fully transparent background */
+            color: black; /* Standard text color */
+            text-align: center;
         }
-        #image-container {
-            width: 800px;
-            height: 800px;
-            background-size: cover;
-            background-position: center;
+
+        #quiz-container {
+            background-color: transparent; /* Fully transparent container */
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        #logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: white; /* Change the answer color to white */
+        }
+
+        #next-button {
+            background-color: white; /* Change background color to white */
+            color: black; /* Change text color to black for visibility */
+            border: 2px solid #ff9900; /* Optional: Add a border for better visibility */
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            transform: scale(0.8) translateY(10%);
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
         }
-        #image-container.pulse {
-            transform: scale(0.8) translateY(10%) scale(1.1);
+
+        #next-button:hover {
+            background-color: #ffcc00; /* Change hover color for better effect */
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fadeOut {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        .fadeIn {
+            animation: fadeIn 0.5s forwards;
         }
     </style>
 </head>
 <body>
-    <div id="image-container"></div>
 
-    <script>
-        const images = [
-            'https://i.postimg.cc/kGYzxJST/10.png',
-            'https://i.postimg.cc/J4gS0hMn/11.png',
-            'https://i.postimg.cc/wBYP5btY/12.png',
-            'https://i.postimg.cc/DwXHXKwc/13.png',
-            'https://i.postimg.cc/nz0PJF3n/14.png',
-            'https://i.postimg.cc/QCCnN2z1/15.png',
-            'https://i.postimg.cc/PJ7VC6Gc/16.png',
-            'https://i.postimg.cc/442S23K5/17.png',
-            'https://i.postimg.cc/KvdsFsD3/18.png',
-            'https://i.postimg.cc/1t5vJxs2/19.png',
-            'https://i.postimg.cc/JzF718dc/2.png',
-            'https://i.postimg.cc/XqrQ6wZg/20.png',
-            'https://i.postimg.cc/wxrwcbP4/21.png',
-            'https://i.postimg.cc/PJ0KXPYn/22.png',
-            'https://i.postimg.cc/Mp2tgfzy/23.png',
-            'https://i.postimg.cc/g2V4pc01/24.png',
-            'https://i.postimg.cc/7LXVCB0V/25.png',
-            'https://i.postimg.cc/0QQC7pCq/26.png',
-            'https://i.postimg.cc/rz6C6728/27.png',
-            'https://i.postimg.cc/gcxCWRb5/28.png',
-            'https://i.postimg.cc/NfTZycMk/29.png',
-            'https://i.postimg.cc/Fssh3zMV/3.png',
-            'https://i.postimg.cc/KcCdvzZY/30.png',
-            'https://i.postimg.cc/Jz5gq5jy/31.png',
-            'https://i.postimg.cc/13Q2wjVh/32.png',
-            'https://i.postimg.cc/kMRpZmxP/33.png',
-            'https://i.postimg.cc/GtDgsFcm/34.png',
-            'https://i.postimg.cc/ZKkMzMcB/35.png',
-            'https://i.postimg.cc/g00MKFY5/36.png',
-            'https://i.postimg.cc/zvTpfqjL/37.png',
-            'https://i.postimg.cc/kgJwn3t4/38.png',
-            'https://i.postimg.cc/Dwx60jqc/39.png',
-            'https://i.postimg.cc/d1YY1VRd/4.png',
-            'https://i.postimg.cc/RVQX5Vhy/40.png',
-            'https://i.postimg.cc/QtTJ6jv6/41.png',
-            'https://i.postimg.cc/Vv9B8Dfn/42.png',
-            'https://i.postimg.cc/5N1S3dg3/43.png',
-            'https://i.postimg.cc/c1fcw4RC/44.png',
-            'https://i.postimg.cc/xCMLvtbh/45.png',
-            'https://i.postimg.cc/kGy8ZGsy/46.png',
-            'https://i.postimg.cc/Fzv3D3yR/47.png',
-            'https://i.postimg.cc/Kc7n4pbg/48.png',
-            'https://i.postimg.cc/52yv7xCw/49.png',
-            'https://i.postimg.cc/fRVZqFT3/5.png',
-            'https://i.postimg.cc/K8WTCdPC/50.png',
-            'https://i.postimg.cc/zG4NsjVx/6.png',
-            'https://i.postimg.cc/3wMMSxc6/7.png',
-            'https://i.postimg.cc/NMY3tPYk/8.png',
-            'https://i.postimg.cc/85HqzBzQ/9.png'
-        ];
+<div id="quiz-container">
+    <img id="logo" src="https://i.imgur.com/cyZ0Z21.png" alt="All Elite Wrestling Logo">
+    <h1>TAYLOR SWIFT</h1>
+    <div id="question-container">
+        <div class="question" id="question">Loading question...</div>
+        <div class="answer" id="answer">Loading answer...</div>
+        <button id="next-button" onclick="nextQuestion()">Next Question</button>
+    </div>
+</div>
 
-        const imageContainer = document.getElementById('image-container');
+<script>
+    // Question and answers data
+    const quizData = [
+        { question: "What year was Taylor Swift born?", answer: "1989." },
+        { question: "In which state did Taylor Swift grow up?", answer: "Pennsylvania." },
+        { question: "What was the title of Taylor Swift's debut album?", answer: '"Taylor Swift" (2006).' },
+        { question: "What genre of music did Taylor initially start in?", answer: "Country." },
+        { question: "What album features the hit song 'Love Story'?", answer: '"Fearless" (2008).' },
+        { question: "Which Taylor Swift album won the Grammy for Album of the Year in 2010?", answer: '"Fearless."' },
+        { question: "What was the name of Taylor's first headlining tour?", answer: "The 'Fearless Tour.'" },
+        { question: "Which song did Taylor Swift write about her relationship with Harry Styles?", answer: '"Style."' },
+        { question: "What is the name of Taylor's 2014 album that marked a shift to pop music?", answer: '"1989."' },
+        { question: "What is the name of Taylor Swift's fanbase?", answer: "Swifties." },
+        { question: "Which music video features Taylor Swift dancing with a squad of celebrities?", answer: '"Bad Blood."' },
+        { question: "What was Taylor's first single to debut at number one on the Billboard Hot 100?", answer: '"Shake It Off."' },
+        { question: "In what year did Taylor Swift win the Grammy for Album of the Year for '1989'?", answer: "2016." },
+        { question: "Which song did Taylor write for the movie 'Hannah Montana: The Movie'?", answer: '"Crazier."' },
+        { question: "What is the title of Taylor Swift's 2017 album?", answer: '"Reputation."' },
+        { question: "What is the title of Taylor Swift's 2020 album?", answer: '"Folklore."' },
+        { question: "Who collaborated with Taylor Swift on the song 'I Don't Wanna Live Forever'?", answer: "Zayn Malik." },
+        { question: "Which of Taylor's songs is about her feud with Kanye West?", answer: '"Famous."' },
+        { question: "In which city did Taylor Swift make her acting debut in a movie?", answer: "In the film 'Valentine's Day' (2010), set in Los Angeles." },
+        { question: "What song features the line 'I had the time of my life fighting dragons with you'?", answer: '"Long Live."' },
+        { question: "Which album features the song 'Cardigan'?", answer: '"Folklore."' },
+        { question: "What is the title of Taylor Swift's documentary released on Netflix?", answer: '"Miss Americana."' },
+        { question: "In what year did Taylor release her album 'Speak Now'?", answer: "2010." },
+        { question: "What is the name of Taylor Swift’s second studio album?", answer: '"Fearless."' },
+        { question: "What song did Taylor release as a surprise during the COVID-19 pandemic?", answer: '"Cardigan."' },
+        { question: "Which album includes the songs 'Out of the Woods' and 'Blank Space'?", answer: '"1989."' },
+        { question: "Who did Taylor Swift collaborate with on the song 'Everything Has Changed'?", answer: "Ed Sheeran." },
+        { question: "What year did Taylor Swift release 'Red'?", answer: "2012." },
+        { question: "What is the name of Taylor's third studio album?", answer: '"Speak Now."' },
+        { question: "What is Taylor Swift’s favorite number?", answer: "13." },
+        { question: "Which album is known for its darker, more mature themes and includes 'Look What You Made Me Do'?", answer: '"Reputation."' },
+        { question: "In which song does Taylor sing about being an outsider in high school?", answer: "In 'Fifteen'." },
+        { question: "How many Grammy Awards has Taylor Swift won as of 2024?", answer: "12." },
+        { question: "What year was Taylor Swift named Billboard's Woman of the Year?", answer: "2014." },
+        { question: "Which Taylor Swift album was the best-selling album of 2014?", answer: '"1989."' },
+        { question: "What is the name of Taylor's philanthropic foundation?", answer: "The Taylor Swift Foundation." },
+        { question: "In what year did Taylor Swift start her music career?", answer: "2006." },
+        { question: "What major award did Taylor receive from the American Music Awards in 2018?", answer: "Artist of the Year." },
+        { question: "Which song did Taylor perform at the 2020 ACM Awards that was nominated for Song of the Year?", answer: '"Soon You\'ll Get Better."' },
+        { question: "What was the title of Taylor Swift's first-ever Netflix special?", answer: '"Miss Americana."' },
+        { question: "Who is Taylor Swift’s best friend known for her modeling career?", answer: "Gigi Hadid." },
+        { question: "Which song did Taylor write about her relationship with Tom Hiddleston?", answer: '"Getaway Car."' },
+        { question: "What is the name of Taylor Swift’s cat?", answer: "Olivia Benson." },
+        { question: "Which celebrity did Taylor Swift have a public feud with over a song lyric?", answer: "Kanye West." },
+        { question: "Who is Taylor Swift's longtime collaborator and friend?", answer: "Jack Antonoff." },
+        { question: "What was the name of Taylor Swift's childhood best friend, who inspired some of her early songs?", answer: "Abigail Anderson." },
+        { question: "What famous award show did Taylor Swift attend wearing a blue gown that became iconic?", answer: "The 2016 Met Gala." },
+        { question: "What was Taylor Swift's first ever single?", answer: '"Tim McGraw."' },
+        { question: "Which Taylor Swift song references the city of Nashville?", answer: '"New Romantics."' },
+        { question: "Which 2012 song includes the lyrics 'I remember how we felt sitting by the water'?", answer: '"All Too Well."' },
+        { question: "How many studio albums has Taylor Swift released as of 2024?", answer: "10." },
+        { question: "Which song features the lyric 'I once believed love would be burning red'?", answer: '"All Too Well."' },
+        { question: "Which song features a collaboration between Taylor Swift and Bon Iver?", answer: '"Exile."' },
+        { question: "Which song from the 'Fearless (Taylor's Version)' album was re-recorded and released as a single in 2021?", answer: '"Love Story (Taylor\'s Version)."' },
+        { question: "Which magazine named Taylor Swift one of the most influential people in the world multiple times?", answer: "TIME Magazine." },
+        { question: "What significant action did Taylor take against Spotify in 2014?", answer: "She pulled her entire catalog from the platform over artist compensation issues." },
+        { question: "What is the impact of Taylor Swift's re-recording of her albums?", answer: "It allows her to regain control of her music and royalties." },
+        { question: "What major milestone did Taylor achieve with her album 'Folklore' in 2020?", answer: "It became her first album to win Album of the Year at the Grammys twice." }
+    ];
 
-        function getRandomImage() {
-            const randomIndex = Math.floor(Math.random() * images.length);
-            return images[randomIndex];
+    let currentQuestionIndex = 0;
+
+    // Shuffle the quiz data
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
+    }
 
-        function changeImage() {
-            const imageUrl = getRandomImage();
-            imageContainer.style.backgroundImage = `url('${imageUrl}')`;
+    // Start the quiz
+    shuffle(quizData);
+    showQuestion();
+
+    function showQuestion() {
+        const questionContainer = document.getElementById("question");
+        const answerContainer = document.getElementById("answer");
+
+        questionContainer.innerText = quizData[currentQuestionIndex].question;
+        answerContainer.innerText = "Loading answer...";
+
+        // Fade in effect
+        answerContainer.classList.remove("fadeIn");
+        answerContainer.classList.add("fadeOut");
+
+        setTimeout(() => {
+            answerContainer.innerText = quizData[currentQuestionIndex].answer;
+            answerContainer.classList.remove("fadeOut");
+            answerContainer.classList.add("fadeIn");
+        }, 500);
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            showQuestion();
+        } else {
+            const questionContainer = document.getElementById("question");
+            const answerContainer = document.getElementById("answer");
+            questionContainer.innerText = "Thank you for playing!";
+            answerContainer.innerText = "";
+            document.getElementById("next-button").style.display = "none"; // Hide the next button
         }
+    }
+</script>
 
-        function pulseEffect() {
-            imageContainer.classList.add('pulse');
-            setTimeout(() => {
-                imageContainer.classList.remove('pulse');
-            }, 300);
-        }
-
-        imageContainer.addEventListener('click', () => {
-            pulseEffect();
-            changeImage();
-        });
-
-        // Initialize the image container with a random image when the page loads
-        window.onload = changeImage;
-    </script>
 </body>
 </html>
